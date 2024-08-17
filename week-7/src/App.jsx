@@ -1,41 +1,41 @@
-import React, { Suspense } from "react"
-import { lazy } from "react"
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
-import Home from './components/Home'
-// import About from './components/About'
-// import Contact from './components/Contact'
-// lazy 
-const About = React.lazy(() =>import('./components/About'))
-const Contact =  React.lazy(() =>import('./components/Contact'))
+// import React, { Suspense } from "react"
+// import { lazy } from "react"
+// import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom"
+// import Home from './components/Home'
+// // import About from './components/About'
+// // import Contact from './components/Contact'
+// // lazy 
+// const About = React.lazy(() =>import('./components/About'))
+// const Contact =  React.lazy(() =>import('./components/Contact'))
 
 
-function App() {
+// function App() {
 
 
-  return (
-    <>
-    <BrowserRouter>
-    <AppBar/>
-    <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/about" element={ <Suspense fallback="loading..."> <About/> </Suspense>}/>
-      <Route path="/contact" element={ <Suspense fallback={"loading..."}> <Contact/> </Suspense>}/>
-    </Routes>
-    </BrowserRouter>
-    </>
-  )
-}
+//   return (
+//     <>
+//     <BrowserRouter>
+//     <AppBar/>
+//     <Routes>
+//       <Route path="/" element={<Home/>}/>
+//       <Route path="/about" element={ <Suspense fallback="loading..."> <About/> </Suspense>}/>
+//       <Route path="/contact" element={ <Suspense fallback={"loading..."}> <Contact/> </Suspense>}/>
+//     </Routes>
+//     </BrowserRouter>
+//     </>
+//   )
+// }
 
-function AppBar(){
-  const navigate = useNavigate()
-  return(
-    <div>
-    <button onClick={() => navigate("/about")}>About</button>
-    <button onClick={() => navigate("/contact")}>Contact</button>
-  </div>
-  )
-}
-export default App
+// function AppBar(){
+//   const navigate = useNavigate()
+//   return(
+//     <div>
+//     <button onClick={() => navigate("/about")}>About</button>
+//     <button onClick={() => navigate("/contact")}>Contact</button>
+//   </div>
+//   )
+// }
+// export default App
 
 
 
@@ -76,3 +76,52 @@ export default App
 //     </div>
 //   )
 // }
+
+
+// TODO "RECOIL"
+
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil"
+import { countAtom } from "./Store/atoms/count"
+
+export default function App(){
+  return(
+    <RecoilRoot>
+    <Count/>
+    </RecoilRoot>
+  )
+}
+
+function Count(){
+  return(
+    <div>
+    <CountRender/>
+    <Button/>
+    </ div>
+  )
+}
+
+function CountRender(){
+  // if we just need the value use this 
+  const count = useRecoilValue(countAtom)
+
+  // if we need both : 
+  // const [count,setCount] = useRecoilState(countAtom)
+  return(
+    <div>
+
+    {
+      count
+    }
+    </div>
+  )
+}
+
+function Button(){
+  const [count,setCount] = useRecoilState(countAtom)
+  return(
+    <div>
+      <button onClick={ () =>setCount(count +1)}>+</button>
+      <button onClick={ ()=> setCount(count-1)}>-</button>
+    </div>
+  )
+}
