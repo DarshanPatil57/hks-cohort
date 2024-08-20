@@ -9,6 +9,8 @@
 // const Contact =  React.lazy(() =>import('./components/Contact'))
 
 
+
+
 // function App() {
 
 
@@ -80,48 +82,77 @@
 
 // TODO "RECOIL"
 
-import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil"
-import { countAtom } from "./Store/atoms/count"
+// import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+// import { countAtom, evenSelector } from "./Store/atoms/count"
+
+// export default function App(){
+//   return(
+//     <RecoilRoot>
+//     <Count/>
+//     </RecoilRoot>
+//   )
+// }
+
+// function Count(){
+//   return(
+//     <div>
+//     <CountRender/>
+//     <Button/>
+//     </ div>
+//   )
+// }
+
+// function CountRender(){
+//   // if we just need the value use this 
+//   const count = useRecoilValue(countAtom)
+//   const isEven = useRecoilValue(evenSelector)
+//   // if we need both : 
+//   // const [count,setCount] = useRecoilState(countAtom)
+//   return(
+//     <div>
+
+//     {
+//       count
+//     }
+//     {
+//         <p>{ isEven  ? 'It is Even' : "" }</p>
+//     }
+//     </div>
+//   )
+// }
+
+// function Button(){
+//   //  const [count,setCount] = useRecoilState(countAtom) - we dont need the count we can use "UseSetRecoilState" its better way to do so .
+//   const setCount = useSetRecoilState(countAtom)
+//   console.log("button re-rendered");
+  
+//   return(
+//     <div>
+//       <button onClick={ () =>setCount(count => count + 1)}>+</button>
+//       <button onClick={ ()=> setCount(count => count - 1)}>-</button>
+//     </div>
+//   )
+// }
+
+
+
+// Todo - TODO APP Assignment
+import { RecoilRoot } from "recoil"
 
 export default function App(){
   return(
     <RecoilRoot>
-    <Count/>
+    <Todo/>
     </RecoilRoot>
   )
 }
 
-function Count(){
+function Todo(){
   return(
     <div>
-    <CountRender/>
-    <Button/>
-    </ div>
-  )
-}
-
-function CountRender(){
-  // if we just need the value use this 
-  const count = useRecoilValue(countAtom)
-
-  // if we need both : 
-  // const [count,setCount] = useRecoilState(countAtom)
-  return(
-    <div>
-
-    {
-      count
-    }
-    </div>
-  )
-}
-
-function Button(){
-  const [count,setCount] = useRecoilState(countAtom)
-  return(
-    <div>
-      <button onClick={ () =>setCount(count +1)}>+</button>
-      <button onClick={ ()=> setCount(count-1)}>-</button>
-    </div>
+    <input type="text" placeholder="Title" onChange={(e) => setValue(e.target.value)} />    <br /> <br />   
+    <input type="text" placeholder="Description" />      <br /> <br />
+    <button>Add Todo</button>
+  </div>
   )
 }
