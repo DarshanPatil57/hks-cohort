@@ -1,43 +1,26 @@
 const express = require("express");
-const app = express();
 const port =process.env.PORT || 8000
+const post = require('./routes/post');
+const logger = require("./middleware/logger");
 
+const app = express();
 
-// const path = require("path");
-// this is used to serve static files,such as images,css,js files from a directory named
-// {
-//     app.use(express.static(path.join(__dirname, "public")))
-// }
+// Body Parser middleware
+app.use(express.json())
+// app.use(express.urlencoded({extended:false}))
 
-let posts = [
-  { id: 1, post: 1 },
-  { id: 2, post: 2 },
-  { id: 3, post: 3 },
-];
+// middleware
+app.use(logger)
 
-// get all posts
-app.get("/api/posts", (req, res) => {
-    const limit = parseInt(req.query.limit)
-    if(! isNaN(limit) && limit > 0){
-        res.json(posts.slice(0,limit))
-    }
-    else{
-        res.json(post)
-    }
-});
+const path = require("path");
+// this is used to serve stati c files,such as images,css,js files from a directory named
+{
+    app.use(express.static(path.join(__dirname, "public")))
+}
 
-// get single post 
-app.get('/api/posts/:id', (req, res) => {   
-    // console.log(req.params);
-    const id = parseInt(req.params.id)
-    const post = posts.find((post) => post.id === id)
-
-    if(!post){
-        res.status(404).json({msg: `A post with the id of ${id} is not found`})
-    } else {
-        res.status(200).json(post)
-    }
-});
+// Routes
+app.use('/api/posts',post)
 
 
 app.listen(8000, () => console.log(`server running on ${port} `));
+ 
